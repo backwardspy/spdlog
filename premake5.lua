@@ -1,26 +1,31 @@
 target_triple = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 project "spdlog"
-    location "spdlog"
     kind "SharedLib"
-    language "C"
+    language "C++"
+    cppdialect "C++17"
+
+    disablewarnings {
+        "4251",
+        "4275",
+    }
 
     targetdir ("bin/"..target_triple.."/%{prj.name}")
     objdir ("bin/obj/"..target_triple.."/%{prj.name}")
 
-    defines "SPDLOG_SHARED_LIB"
-
-    files {
-        "src/async.cpp",
-        "src/cfg.cpp",
-        "src/color_sinks.cpp",
-        "file_sinks.cpp",
-        "fmt.cpp",
-        "spdlog.cpp",
-        "stdout_sinks.cpp"
+    defines {
+        "SPDLOG_COMPILED_LIB",
+        "SPDLOG_SHARED_LIB",
+        "FMT_EXPORT",
+        "spdlog_EXPORTS",
     }
 
-    includedirs "%{prj.name}/include"
+    files {
+        "src/**.cpp",
+        "include/**.h",
+    }
+
+    includedirs "include"
 
     filter "configurations:debug"
         defines "DEBUG"
