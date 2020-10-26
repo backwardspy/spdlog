@@ -1,7 +1,7 @@
 target_triple = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 project "spdlog"
-    kind "SharedLib"
+    kind "StaticLib"
     language "C++"
     cppdialect "C++17"
 
@@ -15,9 +15,6 @@ project "spdlog"
 
     defines {
         "SPDLOG_COMPILED_LIB",
-        "SPDLOG_SHARED_LIB",
-        "FMT_EXPORT",
-        "spdlog_EXPORTS",
     }
 
     files {
